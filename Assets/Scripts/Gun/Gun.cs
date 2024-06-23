@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    public static Action OnShoot;
     public Transform BulletSpawnPoint => _bulletSpawnPoint;
 
     [SerializeField] private Transform _bulletSpawnPoint;
@@ -22,11 +24,27 @@ public class Gun : MonoBehaviour
     private void Shoot()
     {
         if (Input.GetMouseButton(0) &&
-            Time.time >= _lastFireTime + gunFireCD)
+            Time.time >= _lastFireTime)
         {
-            _lastFireTime = Time.time;
-            ShootProjectile();
+            OnShoot?.Invoke();
         }
+    }
+
+    private void OnEnable()
+    {
+        OnShoot += ShootProjectile;
+        OnShoot += ResetLastFireTime;
+    }
+
+    private void OnDisable()
+    {
+        OnShoot -= ShootProjectile;
+        OnShoot -= ResetLastFireTime;
+    }
+
+    private void ResetLastFireTime()
+    {
+        _lastFireTime = Time.time + gunFireCD;
     }
 
     private void ShootProjectile()
