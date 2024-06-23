@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded) {
+        if (Input.GetKey(KeyCode.Space) && _isGrounded) {
             _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
         }
     }
