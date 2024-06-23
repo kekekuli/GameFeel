@@ -12,8 +12,16 @@ public class Gun : MonoBehaviour
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private float gunFireCD = 0.5f;
 
+    private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
     private Vector2 _mousePos;
     private float _lastFireTime = 0f;
+
+    private Animator _animator;
+    
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -34,12 +42,14 @@ public class Gun : MonoBehaviour
     {
         OnShoot += ShootProjectile;
         OnShoot += ResetLastFireTime;
+        OnShoot += FireAnimation;
     }
 
     private void OnDisable()
     {
         OnShoot -= ShootProjectile;
         OnShoot -= ResetLastFireTime;
+        OnShoot -= FireAnimation;
     }
 
     private void ResetLastFireTime()
@@ -51,6 +61,11 @@ public class Gun : MonoBehaviour
     {
         Bullet newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
         newBullet.Init(_bulletSpawnPoint.position, _mousePos);
+    }
+    
+    private void FireAnimation()
+    {
+        _animator.Play(FIRE_HASH, 0, 0f);
     }
 
     private void RotateGun()
