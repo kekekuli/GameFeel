@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _moveSpeed = 10f;
     [SerializeField] private int _damageAmount = 1;
 
+    private Gun _gun;
     private Vector2 _fireDirection;
 
     private Rigidbody2D _rigidBody;
@@ -25,9 +26,12 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         Health health = other.gameObject.GetComponent<Health>();
         health?.TakeDamage(_damageAmount);
-        Destroy(this.gameObject);
+        _gun.ReleaseBulletFromBool(this);
     }
-    public void Init(Vector2 bulletSpawnPoint, Vector2 mousePos){
+    public void Init(Gun gun, Vector2 bulletSpawnPoint, Vector2 mousePos)
+    {
+        _gun = gun;
+        transform.position = bulletSpawnPoint;
         _fireDirection = (mousePos - bulletSpawnPoint).normalized;
     }
 }
