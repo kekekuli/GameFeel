@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -18,7 +19,7 @@ public class Gun : MonoBehaviour
     private float _lastFireTime = 0f;
 
     private Animator _animator;
-
+    private CinemachineImpulseSource _impulseSource;
 
     public void Start()
     {
@@ -27,28 +28,20 @@ public class Gun : MonoBehaviour
 
     private void CreateBulletPool()
     {
-        _bulletPool = new ObjectPool<Bullet>(() =>
-        {
-            return Instantiate(_bulletPrefab);
-        }, bullet =>
-        {
-            bullet.gameObject.SetActive(true);
-        }, bullet =>
-        {
-            bullet.gameObject.SetActive(false);
-        }, bullet =>
-        {
-            Destroy(bullet);
-        });
+        _bulletPool = new ObjectPool<Bullet>(() => { return Instantiate(_bulletPrefab); },
+            bullet => { bullet.gameObject.SetActive(true); }, bullet => { bullet.gameObject.SetActive(false); },
+            bullet => { Destroy(bullet); });
     }
 
     public void ReleaseBulletFromBool(Bullet bullet)
     {
         _bulletPool.Release(bullet);
     }
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void Update()
@@ -71,6 +64,7 @@ public class Gun : MonoBehaviour
         OnShoot += ShootProjectile;
         OnShoot += ResetLastFireTime;
         OnShoot += FireAnimation;
+        OnShoot += GunScreenShake;
     }
 
     private void OnDisable()
@@ -78,9 +72,15 @@ public class Gun : MonoBehaviour
         OnShoot -= ShootProjectile;
         OnShoot -= ResetLastFireTime;
         OnShoot -= FireAnimation;
+        OnShoot -= GunScreenShake;
     }
 
-    private void ResetLastFireTime()
+    private void GunScreenShake()
+    {
+        _impulseSource.GenerateImpulse();
+    }
+
+private void ResetLastFireTime()
     {
         _lastFireTime = Time.time + gunFireCD;
     }
