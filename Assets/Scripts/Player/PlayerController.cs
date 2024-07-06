@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static Action OnJump;
+
     public static PlayerController Instance;
     [SerializeField] private float _jumpStrength = 7f;
     [SerializeField] private Transform _feetTransform;
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _gravityDelay = .2f;
 
     private float _timeInAir;
+    private bool _doubleJumpAvailable = true;
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
     private Rigidbody2D _rigidBody;
@@ -26,12 +27,20 @@ public class PlayerController : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _movement = GetComponent<Movement>();
     }
+    private void OnEnable()
+    {
+        OnJump += ApplyJumpForce;
+    }
+    private void OnDisable()
+    {
+        OnJump -= ApplyJumpForce;
+    }   
 
     private void Update()
     {
         GatherInput();
         Movement();
-        Jump();
+        HandleJump();
         HandleSpriteFlip();
         GravityDelay();
     }
@@ -82,14 +91,24 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(_feetTransform.position, _groundCheck); 
     }
 
-    private void Jump()
+    private void HandleJump()
     {
         if (!_frameInput.Jump)
             return;
         
-        if (CheckGrounded()) {
-            _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
+        if (_doubleJumpAvailable){
+            _doubleJumpAvailable = false;
+            OnJump?.Invoke();
+        }else if (CheckGrounded()) {
+            _doubleJumpAvailable = true;
+            OnJump?.Invoke();
         }
+    }
+
+    private void ApplyJumpForce(){
+        _rigidBody.velocity = Vector2.zero;
+        _timeInAir = 0;
+        _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
     private void HandleSpriteFlip()

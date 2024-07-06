@@ -9495,10 +9495,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpStrength: 15
   _feetTransform: {fileID: 1319450498}
-  _groundCheck: {x: 1.24, y: 0.12}
+  _groundCheck: {x: 1, y: 0.12}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  _extraGravity: 700
+  _gravityDelay: 0.2
 --- !u!70 &2011273897
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
