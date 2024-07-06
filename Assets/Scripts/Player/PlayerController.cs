@@ -10,7 +10,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private float _extraGravity = 700f;
+    [SerializeField] private float _gravityDelay = .2f;
 
+    private float _timeInAir;
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
     private Rigidbody2D _rigidBody;
@@ -30,6 +33,10 @@ public class PlayerController : MonoBehaviour
         Movement();
         Jump();
         HandleSpriteFlip();
+        GravityDelay();
+    }
+    private void FixedUpdate() {
+        ExtraGravity();     
     }
 
     private bool CheckGrounded()
@@ -54,6 +61,19 @@ public class PlayerController : MonoBehaviour
         // _movement = new Vector2(moveX * _moveSpeed, _rigidBody.velocity.y);
 
         _frameInput = _playerInput.FrameInput;
+    }
+    private void GravityDelay(){
+        if (!CheckGrounded()){
+            _timeInAir += Time.deltaTime;
+        }
+        else{
+            _timeInAir = 0;
+        }
+    }
+    private void ExtraGravity(){
+        if (_timeInAir > _gravityDelay){
+            _rigidBody.AddForce(Vector2.down * _extraGravity * Time.deltaTime);
+        }
     }
 
     private void OnDrawGizmos()
