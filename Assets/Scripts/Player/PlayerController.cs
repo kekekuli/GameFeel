@@ -6,9 +6,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
-    
-
-    [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpStrength = 7f;
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
@@ -16,25 +13,23 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
-    private Vector2 _movement;
     private Rigidbody2D _rigidBody;
+    private Movement _movement;
 
     public void Awake() {
         if (Instance == null) { Instance = this; }
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
+        _movement = GetComponent<Movement>();
     }
 
     private void Update()
     {
         GatherInput();
+        Movement();
         Jump();
         HandleSpriteFlip();
-    }
-
-    private void FixedUpdate() {
-        Move();
     }
 
     private bool CheckGrounded()
@@ -44,6 +39,10 @@ public class PlayerController : MonoBehaviour
         return isGrounded;
     }
 
+    private void Movement()
+    {
+        _movement.SetCurrentDirection(_frameInput.Move.x);
+    }
     public bool IsFacingRight()
     {
         return transform.eulerAngles.y == 0;
@@ -55,12 +54,6 @@ public class PlayerController : MonoBehaviour
         // _movement = new Vector2(moveX * _moveSpeed, _rigidBody.velocity.y);
 
         _frameInput = _playerInput.FrameInput;
-        _movement = new Vector2(_frameInput.Move.x * _moveSpeed, _rigidBody.velocity.y);
-    }
-
-    private void Move() {
-
-        _rigidBody.velocity = new Vector2(_movement.x, _rigidBody.velocity.y);
     }
 
     private void OnDrawGizmos()
@@ -76,7 +69,6 @@ public class PlayerController : MonoBehaviour
         
         if (CheckGrounded()) {
             _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
-            Debug.Log("Jumping!");
         }
     }
 
