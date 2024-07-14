@@ -10,10 +10,12 @@ public class Flash : MonoBehaviour
 
     private SpriteRenderer[] _spriteRenderers;
     private Color _defaultColor;
+    private ColorChanger _colorChanger;
 
     private void Awake()
     {
         _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        _colorChanger = GetComponent<ColorChanger>();
     }
 
     public void StartFlash()
@@ -26,7 +28,7 @@ public class Flash : MonoBehaviour
         {
             sr.material = _whiteFlashMaterial;
 
-            sr.color = Color.white;
+            _colorChanger?.SetColor(Color.white);
         }
         yield return new WaitForSeconds(_flashTime);
 
@@ -37,6 +39,7 @@ public class Flash : MonoBehaviour
         foreach (SpriteRenderer sr in _spriteRenderers)
         {
             sr.material = _defaultMaterial;
+            _colorChanger?.SetColor(_colorChanger.DefaultColor);
         }
     }
 }
