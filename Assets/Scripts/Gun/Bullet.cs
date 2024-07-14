@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int _damageAmount = 1;
     [SerializeField] private float _knockbackThrust = 20f;
 
+    private bool _isReleased = false;
+
     private Gun _gun;
     private Vector2 _fireDirection;
 
@@ -25,6 +27,9 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        if (_isReleased == true) return;
+        _isReleased = true;
+
         Health health = other.gameObject.GetComponent<Health>();
         health?.TakeDamage(_damageAmount);
 
@@ -38,6 +43,8 @@ public class Bullet : MonoBehaviour
     }
     public void Init(Gun gun, Vector2 bulletSpawnPoint, Vector2 mousePos)
     {
+        _isReleased = false;
+
         _gun = gun;
         transform.position = bulletSpawnPoint;
         _fireDirection = (mousePos - bulletSpawnPoint).normalized;
