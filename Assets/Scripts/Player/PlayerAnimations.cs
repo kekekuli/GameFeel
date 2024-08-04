@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class PlayerAnimations : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _moveDust;
+    [SerializeField] private ParticleSystem _proofDust;
     [SerializeField] private float _tiltAngle = 20f;
     [SerializeField] private float _tiltSpeed = 5f;
     [SerializeField] private Transform _playerSpriteTransform;
@@ -25,6 +26,15 @@ public class PlayerAnimations : MonoBehaviour
             if (_moveDust.isPlaying)
                 _moveDust.Stop();
         }
+    }
+    private void PlayProofDust(){
+        _proofDust.Play();
+    }
+    private void OnEnable(){
+        PlayerController.OnJump += PlayProofDust;
+    }
+    private void OnDisable(){
+        PlayerController.OnJump -= PlayProofDust;
     }
 
     private void ApplyTilt()
