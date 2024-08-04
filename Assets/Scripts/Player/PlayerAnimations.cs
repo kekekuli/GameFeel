@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,11 +13,32 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] private Transform _playerSpriteTransform;
     [SerializeField] private Transform _cowboyHatTransform;
     [SerializeField] private float _cowboyHatTiltModifer = 2f;
+    [SerializeField] private float _yLandVelocityCheck = -10f;
+    [SerializeField] private Rigidbody2D _rigidBody;
     
+    private Vector2 _velocityBeforePhysicsUpdate;
+    private CinemachineImpulseSource _impulseSource;
+
+    private void Awake(){
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
+    }
+
     private void Update() {
         DetectMoveDust();
         ApplyTilt();
     }
+
+    private void FixedUpdate() {
+        _velocityBeforePhysicsUpdate = _rigidBody.velocity;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (_velocityBeforePhysicsUpdate.y < _yLandVelocityCheck){
+            PlayProofDust();
+            _impulseSource.GenerateImpulse();
+        }
+    }
+
     private void DetectMoveDust(){
         if (PlayerController.Instance.CheckGrounded()){
             if (!_moveDust.isPlaying)
