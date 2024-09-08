@@ -6,9 +6,12 @@ using UnityEngine;
 public class ColorSpotlight : MonoBehaviour
 {
     [SerializeField] private GameObject _spotlightHead;
+    [SerializeField] private float _discoRotSpeed = 24f;
     [SerializeField] private float _rotationSpeed = 12f;
     [SerializeField] private float _maxRotation = 45f;
     
+    public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
+
     private float _currentRotation = 0f;
 
     private void Start()
@@ -31,5 +34,13 @@ public class ColorSpotlight : MonoBehaviour
     private void RandomStartingRotation()
     {
         _currentRotation = UnityEngine.Random.Range(-_maxRotation, _maxRotation); 
+    }
+
+    public IEnumerator SpotLightDiscoParty(float discoPartyTime){
+        float defaultRotSpeed = _rotationSpeed;
+        _rotationSpeed = _discoRotSpeed;
+
+        yield return new WaitForSeconds(discoPartyTime);
+        _rotationSpeed = defaultRotSpeed;
     }
 }

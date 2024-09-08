@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spotlightHead: {fileID: 7757104648331481528}
+  _discoRotSpeed: 106.9
   _rotationSpeed: 48.5
   _maxRotation: 45
 --- !u!1 &5674989732843162002
