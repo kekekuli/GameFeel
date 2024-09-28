@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 917117a64da05e740a1ed6c1a2e1c4a9, type: 3}
-  m_Name: Splatter_2
+  m_Name: Fight
   m_EditorClassIdentifier: 
-  AudioType: 1
-  Clip: {fileID: 8300000, guid: fc2f09c8d292709479228cf0e3591601, type: 3}
+  AudioType: 0
+  Clip: {fileID: 8300000, guid: 5253775ec549470478f16d3a1f83c9e3, type: 3}
   Loop: 0
   RandomizePitch: 0
   RanomPitchRangeModifier: 0.1
-  Volume: 2
-  Pitch: 2.36
+  Volume: 1
+  Pitch: 1

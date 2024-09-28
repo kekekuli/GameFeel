@@ -19703,6 +19703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _masterVolume: 1
   _soundCollection: {fileID: 11400000, guid: 70c4f64e65dbe6c4088f3b7c06ee50a1, type: 2}
+  _sfxMixerGroup: {fileID: 767584372317311797, guid: 9d51cb7e4d486a449bbfb71701a09a05, type: 2}
+  _musicMixerGroup: {fileID: 7325869971273775026, guid: 9d51cb7e4d486a449bbfb71701a09a05, type: 2}
 --- !u!1 &1810510311
 GameObject:
   m_ObjectHideFlags: 0
