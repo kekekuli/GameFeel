@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917117a64da05e740a1ed6c1a2e1c4a9, type: 3}
   m_Name: Jump
   m_EditorClassIdentifier: 
-  AudioType: 0
-  Clip: {fileID: 0}
+  AudioType: 1
+  Clip: {fileID: 8300000, guid: a2bd30491a8fbad44ab64e1ba25f4aeb, type: 3}
   Loop: 0
   RandomizePitch: 0
   RanomPitchRangeModifier: 0.1
