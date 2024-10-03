@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioType: 0
   Clip: {fileID: 8300000, guid: 5253775ec549470478f16d3a1f83c9e3, type: 3}
-  Loop: 0
+  Loop: 1
   RandomizePitch: 0
   RanomPitchRangeModifier: 0.1
   Volume: 1
