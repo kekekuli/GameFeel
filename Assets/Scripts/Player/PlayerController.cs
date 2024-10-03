@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
 
     private Coroutine _jetpackCoroutine;
+    [SerializeField] private Gun _gun;
     [SerializeField] private TrailRenderer _jetpackTrail;
     [SerializeField] private float _jumpStrength = 11f;
     [SerializeField] private Transform _feetTransform;
@@ -56,6 +57,8 @@ public class PlayerController : MonoBehaviour
         HandleSpriteFlip();
         GravityDelay();
         Jetpack();
+        Shoot();
+        Grenade();
     }
     private void FixedUpdate() {
         ExtraGravity();     
@@ -156,6 +159,17 @@ public class PlayerController : MonoBehaviour
     private void StartJetpack(){
         _jetpackTrail.emitting = true;
         _jetpackCoroutine = StartCoroutine(JetpackCoroutine());
+    }
+
+    private void Shoot(){
+        if (!_frameInput.Shoot)
+            return;
+        _gun.FireShoot();
+    }
+    private void Grenade(){
+        if (!_frameInput.Grenade)
+            return;
+        _gun.FireGrenade();
     }
 
     private IEnumerator JetpackCoroutine(){

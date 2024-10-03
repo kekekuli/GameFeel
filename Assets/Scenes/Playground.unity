@@ -13867,7 +13867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1089625127
 Transform:
   m_ObjectHideFlags: 0
@@ -14630,8 +14630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e7f4ee959f034b8512d6ee601565c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSpawnPoint: {fileID: 710606986}
+  _spawnPoint: {fileID: 710606986}
   _bulletPrefab: {fileID: -5611149099131491127, guid: 9dca18bc1fee05d488922a753a58ca8d, type: 3}
+  _grenadePrefab: {fileID: 5359943534360700220, guid: d78e3822210b2094dabba9dd9ef34807, type: 3}
   gunFireCD: 0.2
   _muzzleFlash: {fileID: 370808718}
   _muzzleFlashTime: 0.05
@@ -20450,6 +20451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac92c8116167b104b829fceb3bfadda9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gun: {fileID: 1414218015}
   _jetpackTrail: {fileID: 1776206957}
   _jumpStrength: 15
   _feetTransform: {fileID: 1319450498}
