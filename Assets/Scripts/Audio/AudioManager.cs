@@ -107,6 +107,6 @@ public class AudioManager : MonoBehaviour
     {
         PlayRandomSound(_soundCollection.DiscoMusic);
         var soundLength = _soundCollection.DiscoMusic[0].Clip.length;
-        Invoke("FightMusic", soundLength);
+        Utils.RunAfterDelay(this, soundLength, FightMusic);
     }
 }
