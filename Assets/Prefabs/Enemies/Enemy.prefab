@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1791275310940116173}
   - component: {fileID: 4510057001215365425}
   - component: {fileID: 9056787638781980488}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,8 @@ MonoBehaviour:
   _jumpForce: 7
   _jumpInterval: 4
   _changeDirectionInterval: 3
+  _damageAmount: 1
+  _knockbackThrust: 25
 --- !u!114 &2931160403932860084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5406967454622742902}
   - component: {fileID: 7564454557696005338}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8095572175099409459}
   - component: {fileID: 4821474146721011921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

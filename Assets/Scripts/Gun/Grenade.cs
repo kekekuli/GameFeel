@@ -12,8 +12,9 @@ public class Grenade : Projectile
     [SerializeField] private float _torque = 20f;
     [SerializeField] private Light2D _beepLight;
     [SerializeField] private int _beepCount = 3;
-    [SerializeField] private float _beepInterval = 0.5f;
+    [SerializeField] private float _explodeTime = 1.5f;
     [SerializeField] private float _beepDuration = 0.1f;
+    [SerializeField] private LayerMask _enemyLayer;
     private float _beepIntensity;
     private int _beepIndex = 0;
     private CinemachineImpulseSource _impulseSource;
@@ -46,7 +47,7 @@ public class Grenade : Projectile
 
     private IEnumerator BeepCoroutine(){
         while(_beepIndex < _beepCount){
-            yield return new WaitForSeconds(_beepInterval);
+            yield return new WaitForSeconds(_explodeTime / _beepCount);
             _beepLight.intensity = _beepIntensity; 
             OnBeep?.Invoke();
             yield return new WaitForSeconds(_beepDuration);
@@ -58,7 +59,7 @@ public class Grenade : Projectile
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.GetComponent<Enemy>() != null)
+        if ((1 << other.gameObject.layer & _enemyLayer) != 0)
             Explode();
     }
 
@@ -67,14 +68,14 @@ public class Grenade : Projectile
         _gun.ReleaseGrenadeFromBool(this);
         _impulseSource.GenerateImpulse();
 
-        var colliders = Physics2D.OverlapCircleAll(transform.position, _explodeRadius);
+        var colliders = Physics2D.OverlapCircleAll(transform.position, _explodeRadius, _enemyLayer);
         foreach (var collider in colliders)
         {
             IHitable hitable = collider.GetComponent<IHitable>();
             hitable?.TakeHit();
 
             IDamageable damageable = collider.GetComponent<IDamageable>();
-            damageable?.TakeDamage(_damageAmount, _knockbackThrust);
+            damageable?.TakeDamage(transform.position,_damageAmount, _knockbackThrust);
         }
 
         OnExplode?.Invoke();

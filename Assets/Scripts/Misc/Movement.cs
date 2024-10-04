@@ -6,6 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
+    public bool CanMove => _canMove;
     private bool _canMove = true;
     private Knockback _knockback;
 

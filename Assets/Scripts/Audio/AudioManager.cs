@@ -3,7 +3,6 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    
     [SerializeField] private float _masterVolume = 1f;
     [SerializeField] private SoundCollectionSO _soundCollection;
     [SerializeField] private AudioMixerGroup _sfxMixerGroup;
@@ -15,7 +14,6 @@ public class AudioManager : MonoBehaviour
         FightMusic();
     }
 
-
     private void OnEnable()
     {
         Gun.OnShoot += Gun_OnShoot;
@@ -25,6 +23,7 @@ public class AudioManager : MonoBehaviour
         PlayerController.OnJetpack += PlayerController_OnJetpack;
         Grenade.OnBeep += Grenade_OnBeep;
         Grenade.OnExplode += Grenade_OnExplode;
+        PlayerController.OnPlayerHit += Enemy_OnPlayerHit;
     }
     private void OnDisable()
     {
@@ -35,6 +34,7 @@ public class AudioManager : MonoBehaviour
         PlayerController.OnJetpack -= PlayerController_OnJetpack;
         Grenade.OnBeep -= Grenade_OnBeep;
         Grenade.OnExplode -= Grenade_OnExplode;
+        PlayerController.OnPlayerHit -= Enemy_OnPlayerHit;
     }
     private void Grenade_OnExplode()
     {
@@ -52,6 +52,9 @@ public class AudioManager : MonoBehaviour
     private void Health_OnDeath(Health health)
     {
         PlayRandomSound(_soundCollection.Splatter);
+    }
+    private void Enemy_OnPlayerHit(){
+        PlayRandomSound(_soundCollection.PlayerHit);
     }
 
     private void SoundToPlay(SoundSO sound){

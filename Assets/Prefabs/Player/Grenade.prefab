@@ -203,8 +203,11 @@ MonoBehaviour:
   _torque: 20
   _beepLight: {fileID: 8224902395581364927}
   _beepCount: 3
-  _beepInterval: 0.5
+  _explodeTime: 1.5
   _beepDuration: 0.1
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &4043138378627638658
 MonoBehaviour:
   m_ObjectHideFlags: 0

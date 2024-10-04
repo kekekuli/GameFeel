@@ -1213,6 +1213,7 @@ GameObject:
   - component: {fileID: 2011273900}
   - component: {fileID: 2011273901}
   - component: {fileID: 2011273902}
+  - component: {fileID: 2011273903}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -20436,9 +20437,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e652642db6260344cb636626629dc1de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _splatterPrefab: {fileID: 0}
-  _deathVFX: {fileID: 0}
-  _startingHealth: 5
+  _splatterPrefab: {fileID: 9135471537413290392, guid: 4b11d7a089a96904582983903cec32ca, type: 3}
+  _deathVFX: {fileID: 2155364256924669775, guid: ba3c0cd20167c8e4b9b09772145f0304, type: 3}
+  _startingHealth: 3
 --- !u!114 &2011273896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20610,6 +20611,21 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0.06, y: 0.08, z: 0}
+--- !u!114 &2011273903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817729410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbdfeafd990585347a6374aa537311ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultMaterial: {fileID: 2100000, guid: 0e9e3f84000f446499732ff33c5b47bf, type: 2}
+  _whiteFlashMaterial: {fileID: 2100000, guid: 2712228f7413aed4e82afd60aa4b7c9f, type: 2}
+  _flashTime: 0.1
 --- !u!1001 &2039391563
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,27 +1,22 @@
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _jumpForce = 7f;
     [SerializeField] private float _jumpInterval = 4f;
     [SerializeField] private float _changeDirectionInterval = 3f;
+    [SerializeField] private int _damageAmount = 1;
+    [SerializeField] private float _knockbackThrust = 25f;
 
     private Rigidbody2D _rigidBody;
     private Movement _movement;
     private ColorChanger _colorChanger;
-    private Knockback _knockback;
-    private Flash _flash;
-    private Health _health;
-
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _movement = GetComponent<Movement>();
         _colorChanger = GetComponent<ColorChanger>();
-        _knockback = GetComponent<Knockback>();
-        _flash = GetComponent<Flash>(); 
-        _health = GetComponent<Health>();
     }
 
     private void Start() {
@@ -53,13 +48,17 @@ public class Enemy : MonoBehaviour, IDamageable
             _rigidBody.AddForce(jumpDirection * _jumpForce, ForceMode2D.Impulse);
         }
     }
-    public void TakeDamage(int damageAmount, float knockbackThrust)
-    {
-        _health.TakeDamage(damageAmount);
-        _knockback.GetKnockedBack(PlayerController.Instance.transform.position, knockbackThrust);
-    }
-    public void TakeHit()
-    {
-        _flash.StartFlash();
+    private void OnCollisionEnter2D(Collision2D other) {
+        var player = other.gameObject.GetComponent<PlayerController>();
+        if (!player) return;
+
+        var playerMovement = player.GetComponent<Movement>();
+        if (!playerMovement.CanMove) return;
+
+        IHitable hitable = other.gameObject.GetComponent<IHitable>();
+        hitable?.TakeHit();
+
+        IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
+        damageable?.TakeDamage(transform.position, _damageAmount, _knockbackThrust);
     }
 }

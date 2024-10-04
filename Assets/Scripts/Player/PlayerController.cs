@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Vector2 MoveInput => _frameInput.Move;
-    public static Action OnJump, OnJetpack;
+    public static Action OnJump, OnJetpack, OnPlayerHit;
     public static PlayerController Instance;
 
     private Coroutine _jetpackCoroutine;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private float _timeInAir;
     private float _coyoteTimer;
     private bool _doubleJumpAvailable = true;
-
+    private Health _health;
 
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
@@ -36,17 +36,24 @@ public class PlayerController : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
         _movement = GetComponent<Movement>();
+        _health = GetComponent<Health>();
     }
     private void OnEnable()
     {
         OnJump += ApplyJumpForce;
         OnJetpack += StartJetpack;
+        _health.OnTakeDamage += BordcastHit;
     }
     private void OnDisable()
     {
         OnJump -= ApplyJumpForce;
         OnJetpack -= StartJetpack;
+        _health.OnTakeDamage -= BordcastHit;
     }   
+
+    private void BordcastHit(){
+        OnPlayerHit?.Invoke();
+    }
 
     private void Update()
     {

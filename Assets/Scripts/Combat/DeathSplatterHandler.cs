@@ -6,15 +6,19 @@ public class DeathSplatterHandler : MonoBehaviour{
         GameObject newSplatterPrefab = Instantiate(sender.SplatterPrefab, sender.transform.position, Quaternion.identity);
         SpriteRenderer splatterSpriteRenderer = newSplatterPrefab.GetComponent<SpriteRenderer>();
         ColorChanger colorChanger = sender.GetComponent<ColorChanger>();
-        splatterSpriteRenderer.color = colorChanger.DefaultColor;
-        newSplatterPrefab.transform.SetParent(transform);
+        if (colorChanger != null){
+            splatterSpriteRenderer.color = colorChanger.DefaultColor;
+            newSplatterPrefab.transform.SetParent(transform);
+        }
     }
     private void SpawnDeathVFX(Health sender) {
         GameObject newDeathVFX = Instantiate(sender.DeathVFX, sender.transform.position, Quaternion.identity);   
         ParticleSystem.MainModule ps = newDeathVFX.GetComponent<ParticleSystem>().main;
         ColorChanger colorChanger = sender.GetComponent<ColorChanger>();
-        ps.startColor = colorChanger.DefaultColor;
-        newDeathVFX.transform.SetParent(transform);
+        if (colorChanger != null){
+            ps.startColor = colorChanger.DefaultColor;
+            newDeathVFX.transform.SetParent(transform);
+        }
     }
    
 
