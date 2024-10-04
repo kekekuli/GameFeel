@@ -197,8 +197,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitVFX: {fileID: 877781761561186325, guid: d40fa5aa10760034b863bd11fd6c3487, type: 3}
   _moveSpeed: 20
-  _damageAmount: 1
+  _damageAmount: 100
   _knockbackThrust: 20
+  _explodeRadius: 5
   _torque: 20
   _beepLight: {fileID: 8224902395581364927}
   _beepCount: 3

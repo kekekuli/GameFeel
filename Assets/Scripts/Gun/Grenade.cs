@@ -8,6 +8,7 @@ public class Grenade : Projectile
 {
     public static Action OnBeep;
     public static Action OnExplode;
+    [SerializeField] private float _explodeRadius = 5f;
     [SerializeField] private float _torque = 20f;
     [SerializeField] private Light2D _beepLight;
     [SerializeField] private int _beepCount = 3;
@@ -56,10 +57,26 @@ public class Grenade : Projectile
         Explode();
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.GetComponent<Enemy>() != null)
+            Explode();
+    }
+
     private void Explode(){
         Instantiate(_hitVFX, transform.position, Quaternion.identity);
         _gun.ReleaseGrenadeFromBool(this);
         _impulseSource.GenerateImpulse();
+
+        var colliders = Physics2D.OverlapCircleAll(transform.position, _explodeRadius);
+        foreach (var collider in colliders)
+        {
+            IHitable hitable = collider.GetComponent<IHitable>();
+            hitable?.TakeHit();
+
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+            damageable?.TakeDamage(_damageAmount, _knockbackThrust);
+        }
+
         OnExplode?.Invoke();
     }
 }
