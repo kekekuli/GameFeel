@@ -22,7 +22,7 @@ public class Bullet : Projectile
         hitable?.TakeHit();
 
         IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-        damageable?.TakeDamage(_fireDirection, _damageAmount, _knockbackThrust);
+        damageable?.TakeDamage(PlayerController.Instance.transform.position, _damageAmount, _knockbackThrust);
        
         _gun.ReleaseBulletFromBool(this);
     }

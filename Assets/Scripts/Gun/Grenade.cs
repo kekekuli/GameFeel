@@ -59,6 +59,9 @@ public class Grenade : Projectile
     }
 
     private void Explode(){
+        if (!_isFirstCollision) return;
+        _isFirstCollision = false;
+
         Instantiate(_hitVFX, transform.position, Quaternion.identity);
         _gun.ReleaseGrenadeFromBool(this);
         _impulseSource.GenerateImpulse();
