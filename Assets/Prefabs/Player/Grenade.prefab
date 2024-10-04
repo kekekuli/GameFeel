@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7345629227636930921}
   - component: {fileID: 7062691283656940907}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 5468215691338107612}
   - component: {fileID: 5359943534360700220}
   - component: {fileID: 4043138378627638658}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3819335877780350896}
   - component: {fileID: 8224902395581364927}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

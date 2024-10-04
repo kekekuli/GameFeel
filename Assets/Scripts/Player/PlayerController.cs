@@ -189,4 +189,9 @@ public class PlayerController : MonoBehaviour
         _jetpackCoroutine = null;
         _jetpackTrail.emitting = false;
     }
+
+    private void OnDestroy() {
+        var fade = FindObjectOfType<Fade>();  
+        fade?.FadeInAndOut();
+    }
 }

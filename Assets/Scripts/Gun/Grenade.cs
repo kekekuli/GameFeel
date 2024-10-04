@@ -23,11 +23,6 @@ public class Grenade : Projectile
         _beepIntensity = _beepLight.intensity;
         _rigidBody = GetComponent<Rigidbody2D>();
         _impulseSource = GetComponent<CinemachineImpulseSource>();
-
-        var selfCollider = GetComponent<Collider2D>();
-        var playColliders = PlayerController.Instance.GetComponents<Collider2D>();
-        foreach (var collider in playColliders)
-            Physics2D.IgnoreCollision(selfCollider, collider, true);
     }
 
     public override void Init(Gun gun, Vector2 spawnPoint, Vector2 mousePos)
