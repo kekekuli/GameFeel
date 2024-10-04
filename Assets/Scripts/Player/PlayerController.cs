@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
 
     private Coroutine _jetpackCoroutine;
+    [SerializeField] private float _maxFallSpeed = -20f;
     [SerializeField] private Gun _gun;
     [SerializeField] private TrailRenderer _jetpackTrail;
     [SerializeField] private float _jumpStrength = 11f;
@@ -105,6 +106,8 @@ public class PlayerController : MonoBehaviour
     private void ExtraGravity(){
         if (_timeInAir > _gravityDelay){
             _rigidBody.AddForce(Vector2.down * _extraGravity * Time.deltaTime);
+            if (_rigidBody.velocity.y <= _maxFallSpeed)
+                _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _maxFallSpeed);
         }
     }
 
