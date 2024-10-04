@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
         DiscoBallManager.OnDiscoBallHit += DiscoBallManager_OnDiscoBallHit;
         PlayerController.OnJetpack += PlayerController_OnJetpack;
         Grenade.OnBeep += Grenade_OnBeep;
+        Grenade.OnExplode += Grenade_OnExplode;
     }
     private void OnDisable()
     {
@@ -33,6 +34,11 @@ public class AudioManager : MonoBehaviour
         DiscoBallManager.OnDiscoBallHit -= DiscoBallManager_OnDiscoBallHit;
         PlayerController.OnJetpack -= PlayerController_OnJetpack;
         Grenade.OnBeep -= Grenade_OnBeep;
+        Grenade.OnExplode -= Grenade_OnExplode;
+    }
+    private void Grenade_OnExplode()
+    {
+        PlayRandomSound(_soundCollection.GrenadeExplode);
     }
     private void Grenade_OnBeep()
     {

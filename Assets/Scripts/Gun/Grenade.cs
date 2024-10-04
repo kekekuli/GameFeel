@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class Grenade : Projectile
 {
     public static Action OnBeep;
-
+    public static Action OnExplode;
     [SerializeField] private float _torque = 20f;
     [SerializeField] private Light2D _beepLight;
     [SerializeField] private int _beepCount = 3;
@@ -14,10 +15,12 @@ public class Grenade : Projectile
     [SerializeField] private float _beepDuration = 0.1f;
     private float _beepIntensity;
     private int _beepIndex = 0;
+    private CinemachineImpulseSource _impulseSource;
 
     private void Awake() {
         _beepIntensity = _beepLight.intensity;
         _rigidBody = GetComponent<Rigidbody2D>();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
 
         var selfCollider = GetComponent<Collider2D>();
         var playColliders = PlayerController.Instance.GetComponents<Collider2D>();
@@ -50,5 +53,13 @@ public class Grenade : Projectile
             _beepIndex++;
         }
         _beepLight.enabled = false;
+        Explode();
+    }
+
+    private void Explode(){
+        Instantiate(_hitVFX, transform.position, Quaternion.identity);
+        _gun.ReleaseGrenadeFromBool(this);
+        _impulseSource.GenerateImpulse();
+        OnExplode?.Invoke();
     }
 }
